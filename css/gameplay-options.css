@@ -1,0 +1,44 @@
+.gameplay-options {
+    text-align: center;
+    padding-block: 0.5rem;
+}
+
+.gameplay-options select {
+    padding: 3px 8px;
+    border: 1px solid rgb(219, 150, 162);
+    border-radius: 3px;
+    font-family: inherit;
+}
+
+
+.gameplay-options select:hover {
+    border-color: rgb(219, 150, 162, 0.6);
+}
+
+.gameplay-options .houses-label {
+    margin-inline: 8px;
+}
+
+.gameplay-options fieldset {
+    margin: auto;
+    width: 50%;
+    border-width: 1px 0 0 0;
+}
+
+.gameplay-options legend {
+    padding: 10px;
+}
+
+.game-over-congratulations {
+    font-size: 18px;
+    font-weight: bold;
+    /* font-family: 'Roboto'; */
+    text-align: center;
+    color: rgb(196, 116, 129);
+    width: 100%;
+}
+
+.winner {
+    font-weight: bold;
+    color: rgb(196, 116, 129);
+}

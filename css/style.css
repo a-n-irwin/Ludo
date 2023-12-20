@@ -1,0 +1,428 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+
+.no-javascript {
+    font-size: 1.5rem;
+    width: fit-content;
+    margin: 30px auto;
+}
+
+
+figure {
+    margin: 0;
+    width: fit-content;
+    height: fit-content;
+}
+
+figcaption {
+    cursor: default;
+}
+
+main {
+    visibility: hidden;
+}
+
+#hud-section {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(243, 229, 232);
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+#pause-button {
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgb(218, 165, 174);
+    border-radius: 25px;
+    font-weight: 900;
+    font-family: fantasy;
+    background-color: rgb(219, 150, 162);
+    color: white;
+    box-shadow: -1px 1px 2px 2px #d4d4d4;
+}
+
+#pause-button:hover,
+#pause-button:focus {
+    opacity: 0.8;
+}
+
+#pause-button:active {
+    opacity: 1;
+}
+
+.game-area {
+    display: flex;
+    width: fit-content;
+    margin: auto;
+}
+
+
+.outside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: content-box;
+    width: 72.5px;
+    height: 525px;
+}
+
+.outside div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    height: 75px;
+    padding-block: 5px;
+    border: 1px solid;
+    border-radius: 3px;
+    background-color: rgb(250, 253, 255);
+    box-shadow: -0.5px 0.5px 3px 1px #494949;
+    visibility: hidden;
+}
+
+#outside-red-container {
+    border-color: rgb(214, 0, 54);
+    background-color: rgb(214, 0, 54, 0.2);
+}
+
+#outside-green-container {
+    border-color: rgb(37, 170, 92);
+    background-color: rgb(37, 170, 92, 0.2);
+}
+
+#outside-blue-container {
+    border-color: rgb(0, 110, 255);
+    background-color: rgb(0, 110, 255, 0.2);
+}
+
+#outside-yellow-container {
+    border-color: rgb(238, 222, 129);
+    background-color: rgb(238, 222, 129, 0.2);
+}
+
+#gameboard {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: content-box;
+    margin-inline: 20px;
+    width: 525px;
+    height: 525px;
+    outline: 3px solid rgb(36, 36, 36, 0.8);
+    border-radius: 8px;
+    box-shadow: -2px 2px 10px 5px #5e5e5e;
+}
+
+.start-square {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0 solid #333;
+    width: 210px;
+    height: 210px;
+}
+
+
+.start-square figure {
+    width: 190px;
+    height: 190px;
+}
+
+.start-square figcaption {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+    top: -30px;
+}
+
+#red-house {
+    background-color: rgb(214, 0, 54);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-left-radius: 8px;
+}
+
+#green-house {
+    background-color: rgb(37, 170, 92);
+    border-top-width: 2px;
+    border-bottom-right-radius: 8px;
+}
+
+#blue-house {
+    background-color: rgb(0, 110, 255);
+    border-left-width: 2px;
+    border-bottom-right-radius: 8px;
+    transform: rotate(180deg);
+}
+
+#yellow-house {
+    background-color: rgb(238, 222, 129);
+    border-bottom-left-radius: 8px;
+    transform: rotate(180deg);
+}
+
+
+.vertical-cell-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 105px;
+    height: 210px;
+}
+
+.horizontal-cell-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 210px;
+    height: 105px;
+}
+
+
+#top {
+    background-color: rgb(238, 222, 129);
+}
+
+#left {
+    flex-direction: column-reverse;
+    background-color: rgb(0, 110, 255);
+}
+
+#right {
+    background-color: rgb(37, 170, 92);
+    flex-flow: column wrap-reverse;
+}
+
+#bottom {
+    background-color: rgb(214, 0, 54);
+    flex-flow: row-reverse wrap-reverse;
+}
+
+#top .cell:first-child,
+#top .cell:nth-child(2),
+#top .cell:nth-child(3) {
+    border-top: none;
+}
+
+#right .cell:first-child,
+#right .cell:nth-child(2),
+#right .cell:nth-child(3) {
+    border-right: none;
+}
+
+
+/* Special colored cells */
+.cell:nth-child(5),
+.cell:nth-child(6),
+.cell:nth-child(8),
+.cell:nth-child(11),
+.cell:nth-child(14),
+.cell:nth-child(17) {
+    background-color: inherit;
+}
+
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #333;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    width: 105px;
+    height: 105px;
+}
+
+.cell {
+    cursor: pointer;
+}
+
+.cell-square {
+    position: relative;
+    background-color: white;
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    border-color: #333;
+    width: 35px;
+    height: 35px;
+    padding: 1.5px 2px 1.5px 1.5px;
+}
+
+.seed-container {
+    position: absolute;
+    top: 65px;
+    left: 65px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    width: 80px;
+    height: 80px;
+    visibility: hidden;
+    /* background-color: gold; */
+}
+
+.seed {
+    position: relative;
+    /* z-index: 1; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgb(53, 53, 53);
+    border-radius: 15px;
+    box-shadow: -0.5px 0.5px 3px 1px #494949;
+    font-weight: 600;
+    color: white;
+}
+
+.blue {
+    background-color: rgb(0, 170, 255);
+}
+
+.yellow {
+    background-color: rgb(219, 181, 98);
+}
+
+.red {
+    background-color: rgb(184, 0, 46);
+
+}
+
+.green {
+    background-color: rgb(55, 206, 118);
+}
+
+#game-area-cover {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+}
+
+
+dialog {
+    display: none;
+    position: absolute;
+    z-index: 9;
+    top: 200px;
+    left: 0;
+    border: 1px solid rgba(126, 126, 126, 0.8);
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    width: 380px;
+    box-shadow: -1px 1px 20px 2px black;
+    padding: 0;
+    font-family: 'Poppins';
+}
+
+dialog :focus {
+    outline-color: rgb(184, 113, 125);
+}
+
+dialog-header {
+    display: flex;
+    padding-top: 5px;
+    padding-inline: 8px;
+}
+
+dialog-title {
+    display: block;
+    font-weight: 500;
+    text-align: center;
+    font-size: 13px;
+    width: 100%;
+    /* To account for how much the size of the close button displaces the title from the center of the dialog */
+    padding-left: 25px;
+}
+
+dialog div {
+    width: fit-content;
+}
+
+#dialog-close-button {
+    border-width: 0;
+    padding: 0;
+    background-color: inherit;
+    position: relative;
+}
+
+#dialog-close-button svg {
+    fill: rgb(219, 150, 162);
+    position: relative;
+    z-index: -1;
+}
+
+#dialog-close-button svg path {
+    position: relative;
+    z-index: -2;
+}
+
+#dialog-close-button:hover,
+#dialog-close-button:focus,
+#yes-button:hover,
+#yes-button:focus,
+#no-button:hover,
+#no-button:focus {
+    opacity: 0.8;
+}
+
+#dialog-close-button:active,
+#yes-button:active,
+#no-button:active {
+    opacity: 1;
+}
+
+dialog-content,
+dialog-footer {
+    display: block;
+    margin: 1rem;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+dialog-footer {
+    display: flex;
+    justify-content: right;
+}
+
+dialog-footer button {
+    display: none;
+    margin-inline-start: 10px;
+    width: 65px;
+    height: 26px;
+    border: 1px solid rgb(219, 150, 162);
+    background-color: rgb(219, 150, 162);
+    color: white;
+    font-family: inherit;
+}
+
+#no-button {
+    background-color: inherit;
+    color: black;
+}
+
+
+::selection {
+    background-color: inherit;
+}

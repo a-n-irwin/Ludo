@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Champions</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gameplay-options.css">
+    <script async src="js/javascript-enabled.js"></script>
+    <script defer src="js/app.js"></script>
+    <script defer src="js/welcome.js"></script>
+</head>
+
+<body>
+    <p class="no-javascript">You need to enable JavaScript to play this game.</p>
+    <main>
+        <section id="hud-section">
+            <button id="pause-button" type="button" title="Pause the game">|&nbsp;&nbsp;&nbsp;|</button>
+        </section>
+        <section class="game-area">
+            <!-- Seeds that go out of the board will be placed here -->
+            <div class="outside">
+                <div id="outside-blue-container"></div>
+                <div id="outside-red-container"></div>
+            </div>
+
+            <div id="gameboard">
+                <div class="start-square" id="blue-house">
+                    <figure draggable="false">
+                        <img src="img/blue.jpg" alt="blue's image" width="190" height="190" draggable="false">
+                        <figcaption>Violet Evergarden</figcaption>
+                    </figure>
+                    <div class="seed-container">
+                        <span class="seed blue" id="blue-1"></span>
+                        <span class="seed blue" id="blue-2"></span>
+                        <span class="seed blue" id="blue-3"></span>
+                        <span class="seed blue" id="blue-4"></span>
+                    </div>
+                </div>
+                <div class="vertical-cell-container" id="top">
+                    <!-- Cells will be generated here -->
+                </div>
+                <div class="start-square" id="yellow-house">
+                    <figure draggable="false">
+                        <img src="img/yellow.jpeg" alt="yellow's image" width="190" height="190" draggable="false">
+                        <figcaption>Flame Girl</figcaption>
+                    </figure>
+                    <div class="seed-container">
+                        <span class="seed yellow" id="yellow-1"></span>
+                        <span class="seed yellow" id="yellow-2"></span>
+                        <span class="seed yellow" id="yellow-3"></span>
+                        <span class="seed yellow" id="yellow-4"></span>
+                    </div>
+                </div>
+                <div class="horizontal-cell-container" id="left">
+                    <!-- Cells will be generated here -->
+                </div>
+                <div class="cell home" red="57" blue="57" green="57" yellow="57">
+                    <img src="img/home.jpeg" alt="home's image" width="79">
+                </div>
+                <div class="horizontal-cell-container" id="right">
+                    <!-- Cells will be generated here -->
+                </div>
+                <div class="start-square" id="red-house">
+                    <figure draggable="false">
+                        <img src="img/red.png" alt="red's image" width="190" height="190" draggable="false">
+                        <figcaption>She-Ra</figcaption>
+                    </figure>
+                    <div class="seed-container">
+                        <span class="seed red" id="red-1"></span>
+                        <span class="seed red" id="red-2"></span>
+                        <span class="seed red" id="red-3"></span>
+                        <span class="seed red" id="red-4"></span>
+                    </div>
+                </div>
+                <div class="vertical-cell-container" id="bottom">
+                    <!-- Cells will be generated here -->
+                </div>
+                <div class="start-square" id="green-house">
+                    <figure draggable="false">
+                        <img src="img/green.jpg" alt="green's image" width="190" height="190" draggable="false">
+                        <figcaption>Wednesday Addams</figcaption>
+                        <div class="seed-container">
+                            <span class="seed green" id="green-1"></span>
+                            <span class="seed green" id="green-2"></span>
+                            <span class="seed green" id="green-3"></span>
+                            <span class="seed green" id="green-4"></span>
+                        </div>
+                    </figure>
+                </div>
+            </div>
+            <!-- Seeds that go out of the board will be placed here -->
+            <div class="outside">
+                <div id="outside-yellow-container"></div>
+                <div id="outside-green-container"></div>
+            </div>
+        </section>
+    </main>
+    <div id="game-area-cover"></div>
+    <dialog>
+        <dialog-header role="heading">
+            <dialog-title>
+                <!-- Title of the dialog goes here -->
+            </dialog-title>
+            <div>
+                <button type="button" class="dialog-button" id="dialog-close-button" value="close"
+                    title="Close this dialog">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 512 512">
+                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+                        <path opacity="1"
+                            d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+                    </svg>
+                </button>
+            </div>
+        </dialog-header>
+        <dialog-content>
+            <!-- Dialog contents will be generated here -->
+        </dialog-content>
+        <dialog-footer>
+            <div class="dialog-button-wrapper">
+                <!-- Default value for accept is 'Yes' -->
+                <button type="button" class="dialog-button" id="yes-button" value="yes">Yes</button>
+            </div>
+            <div class="dialog-button-wrapper">
+                <!-- Default value for decline is 'No' -->
+                <button type="button" class="dialog-button" id="no-button" value="no">No</button>
+            </div>
+        </dialog-footer>
+    </dialog>
+
+    <!-- Non-dependent scripts -->
+    <script src="js/cell.js"></script>
+    <script src="js/dialog.js"></script>
+    <script src="js/markup.js"></script>
+
+    <!-- Dependent scripts -->
+    <script src="js/hud.js"></script> <!-- Dependent on dialog.js -->
+    <script src="js/options.js"></script> <!-- Dependent on dialog.js -->
+</body>
+
+</html>
