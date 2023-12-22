@@ -7,9 +7,9 @@
     <title>Ludo Champions</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/gameplay-options.css">
-    <script async src="js/javascript-enabled.js"></script>
     <script defer src="js/app.js"></script>
     <script defer src="js/welcome.js"></script>
+    <!-- <script defer src="js/tests.js"></script> -->
 </head>
 
 <body>
@@ -130,13 +130,14 @@
     </dialog>
 
     <!-- Non-dependent scripts -->
+    <script src="js/javascript-enabled.js"></script>
     <script src="js/cell.js"></script>
     <script src="js/dialog.js"></script>
     <script src="js/markup.js"></script>
 
     <!-- Dependent scripts -->
     <script src="js/hud.js"></script> <!-- Dependent on dialog.js -->
-    <script src="js/options.js"></script> <!-- Dependent on dialog.js -->
+    <script src="js/options.js"></script> <!-- Dependent on dialog.js, markup.js -->
 </body>
 
 </html>

@@ -1,19 +1,24 @@
 // Gameplay configurations
 
+
+
 // Default gameplay options
 const options = {
     controlScheme: 'drag-and-drop',
     players: 2,
+    // The houses playing
+    houses: {
+        count: 4,
+        checked: 4,
+    },
+    // Seed colors and player association
     playerId: {
         red: 1,
         green: 1,
         blue: 2,
         yellow: 2
     },
-    houses: {
-        count: 4,
-        checked: 4,
-    },
+    boardRotation: '0'
 }
 
 
@@ -33,11 +38,14 @@ function showGameplayOptions() {
             yes: () => {
                 // Initializes the game if the player made valid option choices
                 if (isValidGameplayOptions()) {
-                    updatePlayerIds();
-                    return init();
+                    setGameplayOptions()
+                    init();
+                    // So the dialog can close
+                    return true;
                 }
                 else {
                     // Let the user know somehow that the options they made were invalid...
+                    return false;
                 }
             },
             // When the options menu closes, it will initialize the game board, which will essentially start the game
@@ -48,8 +56,8 @@ function showGameplayOptions() {
         }
     });
 
-    // The elements would have been created at this point so we can use them
-    document.getElementById('control-scheme-select').addEventListener('blur', setControlScheme);
+    // The elements would have been created at this point, so they can be used
+
     document.getElementById('players-select').addEventListener('click', autoSetGameplayOptions);
 
     houseColorCheckboxes = document.querySelectorAll('.house-color');
@@ -59,9 +67,9 @@ function showGameplayOptions() {
 }
 
 
-/** Creates an in-game settings or options menu */
-function showGameSettingsMenu() {
-
+function updateCheckedHouses(event) {
+    const checkbox = event.target;
+    options.houses.checked += (checkbox.checked) ? 1 : -1;
 }
 
 
@@ -88,7 +96,28 @@ function autoSetGameplayOptions(event) {
 }
 
 
-function updatePlayerIds() {
+function setDefaultGameplayOptions() {
+    options.controlScheme = 'drag-and-drop';
+    options.players = 2;
+    options.houses.count = 4;
+    options.houses.checked = 4;
+    options.playerId.red = 1;
+    options.playerId.green = 1;
+    options.playerId.blue = 2;
+    options.playerId.yellow = 2;
+    options.boardRotation = '0';
+
+    return true;
+}
+
+
+function setControlScheme() {
+    options.controlScheme = document.getElementById('control-scheme-select').value;
+}
+
+
+// Assigns seed colors to players by giving them player ids
+function setPlayerIds() {
     const housesPerPlayer = options.houses.checked / options.players;
 
     let count = 0;
@@ -102,28 +131,25 @@ function updatePlayerIds() {
 }
 
 
-function setControlScheme(event) {
-    options.controlScheme = event.target.value;
+function setGameBoardRotation() {
+    const rotation = document.getElementById('board-rotation-select').value;
+    document.getElementById('gameboard').style.transform = `rotate(${rotation}deg)`;
+
+    // To keep the home image's rotation constant
+    document.querySelector('.home img').style.transform = `rotate(${-rotation}deg)`;
+
+    options.boardRotation = rotation;
 }
 
 
-function updateCheckedHouses(event) {
-    const checkbox = event.target;
-    options.houses.checked += (checkbox.checked) ? 1 : -1;
+function setGameplayOptions() {
+    setControlScheme();
+    setPlayerIds();
+    setGameBoardRotation();
 }
 
 
-function setDefaultGameplayOptions() {
-    options.players = 2;
-    options.houses.count = 4;
-    options.houses.checked = 4;
-    options.controlScheme = 'drag-and-drop'
-    options.playerId.red = 1;
-    options.playerId.green = 1;
-    options.playerId.blue = 2;
-    options.playerId.yellow = 2;
+/** Creates an in-game settings or options menu */
+function showGameSettingsMenu() {
 
-    return true;
 }
-
-

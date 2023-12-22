@@ -1,13 +1,18 @@
+// Independent
+
 // Test if the values of the red, green, blue, and yellow attributes of the cells were generated correctly and the seed can thus move correctly
 
-document.getElementById('gameboard').addEventListener('click', (e) => {
-    testCellMovement('blue');
-});
+const gameboard = document.getElementById('gameboard');
+if (gameboard) {
 
+    gameboard.addEventListener('click', (e) => {
+        testSeedMovement('blue');
+    });
+}
 
-function testCellMovement(color) {
+function testSeedMovement(color) {
     // Selects a seed from a particular house (red, green, blue or yellow)
-    const seed = document.querySelector(`#${color} .seed`);
+    const seed = document.querySelector(`#${color}-house .seed`);
 
     let colorId = 1;
 

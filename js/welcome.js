@@ -19,7 +19,7 @@
 
 // } else showGameplayOptions();
 
-showGameplayOptions();
+// showGameplayOptions();
 
 function displayLudoInstructions() {
 

@@ -80,7 +80,8 @@ const dice = {
         dice[1] = dice.face2;
     },
 
-    /** In the case where the dice value is dice.EMPTY_DIE it returns 0 instead, otherwise it simply returns the face value of the die*/
+    /** In the case where the dice value is dice.EMPTY_DIE it returns 0 instead, 
+     * otherwise it simply returns the face value of the die */
     number: (face = 0) => face === dice.EMPTY_DIE ? 0 : face,
 
     /** Returns the sum of dice value that is left to be played */
@@ -107,10 +108,7 @@ function init() {
     });
     // show the game when the game board has been made
     main.style.visibility = 'visible';
-
-    return true;
-};
-
+}
 
 
 function createGameBoard() {
@@ -186,6 +184,20 @@ function addGameBoardEventListeners() {
         addTouchEventListerners();
 }
 
+function removeGameBoardEventListeners() {
+    document.querySelector('.home').removeEventListener('click', rollDice);
+
+    allCells?.forEach(cell => {
+        cell.style.cursor = 'default';
+        cell.removeEventListener('dblclick', onCellDoubleClick);
+    });
+
+    if (options.controlScheme === 'drag-and-drop')
+        removeDragAndDropEventListeners()
+    else if (options.controlScheme === 'touch')
+        removeTouchEventListeners();
+}
+
 // Drag-and-drop control scheme
 
 function addDragAndDropEventListerners() {
@@ -208,7 +220,7 @@ function addDragAndDropEventListerners() {
     });
 }
 
-function removeDragAndDropScheme() {
+function removeDragAndDropEventListeners() {
     removeStyleForSelectedSeed = setStyleForSelectedSeed = null
 
     allSeeds.forEach(seed => {
@@ -243,7 +255,7 @@ function addTouchEventListerners() {
     });
 }
 
-function removeTouchScheme() {
+function removeTouchEventListeners() {
     removeStyleForSelectedSeed = setStyleForSelectedSeed = null;
 
     // Event handlers for clicking on seeds
@@ -281,8 +293,8 @@ const setStyleForDraggedSeed = () => {
 }
 
 const setStyleForClickedSeed = () => {
-    seed.element.style.borderWidth = '3px';
-    seed.element.style.borderColor = 'white';
+    seed.element.style.outline = '2px solid white';
+    seed.element.style.outlineOffset = '1px';
 }
 
 const removeStyleForDraggedSeed = () => {
@@ -290,8 +302,8 @@ const removeStyleForDraggedSeed = () => {
 }
 
 const removeStyleForClickedSeed = () => {
-    seed.element.style.borderWidth = '2px';
-    seed.element.style.borderColor = 'rgb(53, 53, 53)';
+    seed.element.style.outline = '0';
+    seed.element.style.outlineOffset = '0';
 }
 
 
@@ -308,6 +320,8 @@ function initSeed(element) {
 }
 
 function disableSeed(seed) {
+    removeStyleForSelectedSeed();
+
     seed.element.textContent = '';
     seed.element.style.cursor = 'default';
     seed.element.setAttribute('state', 'outside');
@@ -324,22 +338,25 @@ function disableSeed(seed) {
 }
 
 
-// What happens when the selection of the seed is un-done or after a valid move is made to a cell
+function updateCellSeedCount(cell) {
+    if (cell && cell.lastChild) cell.lastChild.textContent = cell.childElementCount > 1 ? cell.childElementCount : '';
+}
+
+
+// What happens when the selection of the seed is un-done
 function endSeedSelection() {
     if (seed.active) {
+        const currentState = seed.element.getAttribute('state');
+        // The cell the seed moved from, and the one it is currently at, respectively
+        const oldCell = seed.cellId !== 0 && seed.cellId !== 57 ? document.querySelector(`[${seed.color}="${seed.cellId}"]`) : null;
+        const newCell = currentState === 'in-board' ? seed.element.parentNode : null;
+
         removeStyleForSelectedSeed();
 
-        const oldCell = seed.cellId !== 0 ? document.querySelector(`[${seed.color}="${seed.cellId}"]`) : null;
-        const currentState = seed.element.getAttribute('state');
+        // Let the players know how many seeds are left on the old and new cells
+        updateCellSeedCount(oldCell);
+        updateCellSeedCount(newCell);
 
-        // If the seed just left a cell and the cell still has seeds 
-        if (oldCell && oldCell.lastChild) {
-            // Let the players know how many seeds are left on the old cell
-            oldCell.lastChild.textContent = oldCell.childElementCount > 1 ? oldCell.childElementCount : '';
-        }
-
-        // Let the players know how many seeds are now on the new cell
-        seed.element.textContent = currentState === 'in-board' && seed.element.parentNode.childElementCount > 1 ? seed.element.parentNode.childElementCount : '';
         seed.active = false;
     }
 }
@@ -353,14 +370,11 @@ const onSeedDragStart = (event) => {
     seed.element.textContent = '';
 
     const cell = (seed.state === 'in-board') ? seed.element.parentNode : null;
-    // When a seed is dragged from a cell containing at least 3 seeds we get to see how many seeds will be left on top of the seed just
+    // When a seed is dragged from a cell containing at least 2 seeds we get to see how many seeds will be left on top of the seed just
     // beneath the one being dragged
     if (cell) {
-        const seedBeneath = cell.childNodes.length > 2 ? cell.childNodes.item(cell.childNodes.length - 2) : null;
-        console.log(seedBeneath);
-        if (seedBeneath) {
-            seedBeneath.textContent = cell.childNodes.length - 1;
-        }
+        const seedBeneath = cell.childNodes.length > 1 ? cell.childNodes.item(cell.childNodes.length - 2) : null;
+        if (seedBeneath) seedBeneath.textContent = cell.childElementCount > 2 ? cell.childElementCount - 1 : '';
     }
     onSeedSelection();
 }
@@ -388,7 +402,7 @@ const onSeedClick = (event) => {
     const currentSeedCellId = Number(currentSeed.parentNode.getAttribute(currentSeedColor));
 
     // There's already an active seed but another is being clicked on
-    // When one seed is active and another seed in-board is selected, that will be interpreted as making a move to that cell instead
+    // When one seed is active and an in-board seed is selected, that will be interpreted as making a move to that cell instead
     if (seed.active) {
         // If the same seed is selected
         if (seed.element.getAttribute('id') === currentSeedId)
@@ -451,7 +465,7 @@ function onCellSelection(cell, cellId) {
                 const targetSeed = cell.lastChild;
                 const targetSeedColor = targetSeed.classList.item(1);
                 const targetSeedPlayerId = targetSeed.getAttribute('player-id');
-                // The player id of the dragged seed
+                // The player id of the selected seed
                 const playerId = seed.element.getAttribute('player-id');
 
                 // If the seeds are associated with the same player
@@ -479,19 +493,10 @@ function onCellSelection(cell, cellId) {
                     targetSeed.textContent = '';
                     targetSeed.style.position = 'relative';
                     targetSeed.setAttribute('state', 'in-house');
+
+                    updateCellSeedCount(cell);
                 }
             }
-            // When a seed enters the game
-            if (seed.state === 'in-house') {
-                seed.element.setAttribute('state', 'in-board');
-                seed.element.style.position = 'absolute';
-            }
-
-            // Turns will only change as long as there's still a game to play
-            if (!checkWin()) {
-                if (dice.empty() && !dice.doubleSix()) changePlayerTurns();
-            }
-            else gameOver();
 
         } else {
             seed.element.style.position = 'relative';
@@ -499,6 +504,22 @@ function onCellSelection(cell, cellId) {
             document.getElementById(`outside-${seed.color}-container`).append(seed.element);
             disableSeed(seed);
         }
+
+        // Control reaches here when the move is valid and also allowed; the only logically valid but disallowed move is when a player makes an 'early exit'
+        // by stepping on an opponent's seed while having no other way to play the outstanding die, if any.
+
+        // When a seed enters the game
+        if (seed.state === 'in-house') {
+            seed.element.setAttribute('state', 'in-board');
+            seed.element.style.position = 'absolute';
+        }
+
+        // Turns will only change as long as there's still a game to play
+        if (!checkWin()) {
+            if (dice.empty() && !dice.doubleSix()) changePlayerTurns();
+        }
+        else gameOver();
+
     }
     else return message(`You can't go there`);
 }
@@ -508,13 +529,9 @@ function onCellDoubleClick(event) {
     const cell = event.target.classList.contains('cell') ? event.target : event.target.parentNode;
     // If there's more than one seed on the cell, take the bottom seed (first child) and place it on top of the rest (last child)
     if (cell.childElementCount > 1) {
-        const firstChild = cell.firstChild;
-
-        firstChild.textContent = cell.childElementCount;
-
         cell.lastChild.textContent = '';
-        cell.removeChild(firstChild);
-        cell.append(firstChild);
+        cell.firstChild.textContent = cell.childElementCount;
+        cell.append(cell.firstChild);
     }
 }
 
@@ -576,18 +593,17 @@ function isValidMove(seed, cellId) {
 
 function rollDice() {
     // There's no seed selected and the last move has been played (both die faces are empty) 
-    // The first condition is done to accommodate touch control scheme
+    // This first condition is done to accommodate touch control scheme
     if (!seed.active) {
-        if (dice.empty()) {
+        // The dice is allowed to be rolled when the current player has no way to play any of the faces
+        if (dice.empty() || (!currentPlayerHasValidMoves() && changePlayerTurns())) {
             dice.face1 = dice[0] = Math.floor(Math.random() * 6 + 1);
             dice.face2 = dice[1] = Math.floor(Math.random() * 6 + 1);
             // dice.face1 = dice[0] = 6;
             // dice.face2 = dice[1] = 1;
 
+            console.log(`turn ${playerTurns.playerId}`);
             console.log(`dice: ${dice[0]}, ${dice[1]}`);
-
-            // Change turns if a player has no moves
-            if (!currentPlayerHasValidMoves()) changePlayerTurns();
         }
         else message(`Player ${playerTurns.playerId} needs to complete the current dice -> ${dice.face1} ${dice.face2}.\nOutstanding dice -> ${dice.number(dice[0])} ${dice.number(dice[1])}`);
     }
@@ -595,10 +611,8 @@ function rollDice() {
 
 
 function changePlayerTurns() {
-    playerTurns.next();
     dice.reset();
-
-    console.log(`turn: ${playerTurns.playerId}`);
+    return playerTurns.next();
 }
 
 
@@ -608,29 +622,18 @@ const correctPlayerTurn = () => Number(seed.element.getAttribute('player-id')) =
 const checkWin = () => document.querySelectorAll(`#gameboard [player-id="${playerTurns.playerId}"]`).length === 0;
 
 
-
-function disableGameBoard() {
-    document.querySelector('.home').removeEventListener('click', rollDice);
-
-    (options.controlScheme === 'drag-and-drop') ? removeDragAndDropScheme() : removeTouchScheme();
-
-    allCells?.forEach(cell => {
-        cell.style.cursor = 'default';
-    })
-}
-
-
 function gameOver() {
     showDialogBox({
         title: 'Game Over',
         content: `
             <div class="game-over-congratulations">Congratulations, player ${playerTurns.playerId}!</div>
-            <br>To play again, click 'Start', or close the dialog to stop the game.
-            <br><br><span class="winner">Winner:</span> Player ${playerTurns.playerId}`,
+            <p>To play again, click 'Start', or close the dialog to stop the game.</p>
+            <br>
+            <p><span class="winner">Winner:</span> Player ${playerTurns.playerId}</p>`,
         yes: 'Start',
         callbackfns: {
             yes: startNewGame,
-            close: disableGameBoard
+            close: removeGameBoardEventListeners
         }
     });
 }
@@ -640,4 +643,4 @@ function startNewGame() {
 
 
 // Starts the app: called here so all script processing must have been done first
-// init();
+init();
