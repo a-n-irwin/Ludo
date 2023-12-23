@@ -6,6 +6,9 @@ const bottomCellContainer = document.getElementById('bottom');
 
 
 const allSeeds = document.querySelectorAll('.seed');
+const diceElement = document.querySelectorAll('.dice-outcome');
+const playerTurnDisplay = document.querySelector('#player-turn');
+
 let allCells;
 
 
@@ -601,9 +604,7 @@ function rollDice() {
             dice.face2 = dice[1] = Math.floor(Math.random() * 6 + 1);
             // dice.face1 = dice[0] = 6;
             // dice.face2 = dice[1] = 1;
-
-            console.log(`turn ${playerTurns.playerId}`);
-            console.log(`dice: ${dice[0]}, ${dice[1]}`);
+            diceElement.forEach((element, i) => element.textContent = dice[i]);
         }
         else message(`Player ${playerTurns.playerId} needs to complete the current dice -> ${dice.face1} ${dice.face2}.\nOutstanding dice -> ${dice.number(dice[0])} ${dice.number(dice[1])}`);
     }
@@ -611,8 +612,13 @@ function rollDice() {
 
 
 function changePlayerTurns() {
-    dice.reset();
-    return playerTurns.next();
+    const turn = playerTurns.next();
+
+    // Reset the dice display 
+    diceElement[0].textContent = diceElement[1].textContent = '0';
+    playerTurnDisplay.textContent = `Player ${playerTurns.playerId}`;
+
+    return turn;
 }
 
 

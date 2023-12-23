@@ -36,11 +36,13 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px;
     background-color: rgb(243, 229, 232);
     height: 10vh;
     border-bottom: 1px solid #eee;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    font-size: 20px;
 }
 
 #pause-button {
@@ -62,6 +64,32 @@ main {
 
 #pause-button:active {
     opacity: 1;
+}
+
+.dice-outcome-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.hud-item-title {
+    color: rgb(170, 92, 92);
+}
+
+.dice-outcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: 1px solid rgb(219, 150, 162);
+    border-radius: 3px;
+    margin-inline: 1px;
+    color: rgb(219, 150, 162);
+}
+
+#player-turn {
+    color: rgb(167, 21, 21);
 }
 
 .game-area {
