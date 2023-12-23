@@ -76,8 +76,8 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-sizing: content-box;
     height: 525px;
+
 }
 
 .outside div {
@@ -85,34 +85,33 @@ main {
     flex-flow: row wrap;
     justify-content: space-between;
     align-content: space-between;
-    width: 72.5px;
+    width: 75px;
     height: 75px;
     padding: 3px;
     border: 1px solid;
     border-radius: 3px;
-    background-color: rgb(250, 253, 255);
     box-shadow: -0.5px 0.5px 3px 1px #494949;
     visibility: hidden;
 }
 
 #outside-red-container {
-    border-color: rgb(214, 0, 54);
-    background-color: rgb(214, 0, 54, 0.2);
-}
-
-#outside-green-container {
-    border-color: rgb(37, 170, 92);
-    background-color: rgb(37, 170, 92, 0.2);
+    border-color: rgb(200, 0, 0);
+    background-color: rgb(200, 0, 0, 0.2);
 }
 
 #outside-blue-container {
-    border-color: rgb(0, 110, 255);
-    background-color: rgb(0, 110, 255, 0.2);
+    border-color: rgb(0, 120, 200);
+    background-color: rgba(0, 120, 200, 0.2);
 }
 
 #outside-yellow-container {
-    border-color: rgb(238, 222, 129);
-    background-color: rgb(238, 222, 129, 0.2);
+    border-color: gold;
+    background-color: rgba(206, 175, 0, 0.2);
+}
+
+#outside-green-container {
+    border-color: green;
+    background-color: rgba(0, 128, 0, 0.2);
 }
 
 #gameboard {
@@ -166,12 +165,6 @@ main {
     transform: rotate(90deg);
 }
 
-#green-house {
-    background-color: rgb(37, 170, 92);
-    border-top-width: 2px;
-    border-bottom-right-radius: 8px;
-}
-
 #blue-house {
     background-color: rgb(0, 110, 255);
     border-left-width: 2px;
@@ -183,6 +176,12 @@ main {
     background-color: rgb(238, 222, 129);
     border-bottom-right-radius: 8px;
     transform: rotate(-90deg);
+}
+
+#green-house {
+    background-color: rgb(37, 170, 92);
+    border-top-width: 2px;
+    border-bottom-right-radius: 8px;
 }
 
 
@@ -200,9 +199,9 @@ main {
     height: 105px;
 }
 
-
-#top {
-    background-color: rgb(238, 222, 129);
+#bottom {
+    background-color: rgb(214, 0, 54);
+    flex-flow: row-reverse wrap-reverse;
 }
 
 #left {
@@ -210,14 +209,13 @@ main {
     background-color: rgb(0, 110, 255);
 }
 
+#top {
+    background-color: rgb(238, 222, 129);
+}
+
 #right {
     background-color: rgb(37, 170, 92);
     flex-flow: column wrap-reverse;
-}
-
-#bottom {
-    background-color: rgb(214, 0, 54);
-    flex-flow: row-reverse wrap-reverse;
 }
 
 #top .cell:first-child,
@@ -299,17 +297,16 @@ main {
     color: white;
 }
 
+.red {
+    background-color: rgb(184, 0, 46);
+}
+
 .blue {
     background-color: rgb(0, 170, 255);
 }
 
 .yellow {
     background-color: rgb(219, 181, 98);
-}
-
-.red {
-    background-color: rgb(184, 0, 46);
-
 }
 
 .green {
