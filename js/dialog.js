@@ -2,6 +2,7 @@ const main = document.querySelector('main');
 
 // The div which covers the game area, hidden by default
 const gameAreaCover = document.getElementById('game-area-cover');
+const dialogSection = document.getElementById('dialog-section');
 
 const dialog = document.querySelector('dialog');
 const dialogTitle = document.querySelector('dialog-title');
@@ -12,7 +13,6 @@ const yesButton = document.getElementById('yes-button');
 const noButton = document.getElementById('no-button');
 
 let callbackfns;
-
 
 
 const DialogBoxParameter = {
@@ -71,6 +71,7 @@ function showDialogBox(params = defaultParameter, showCloseButton = true) {
     callbackfns = params.callbackfns;
 
     // Show the dialog
+    dialogSection.style.display = 'flex';
     dialog.style.display = 'block';
 }
 
@@ -83,7 +84,7 @@ function hideDialogBox() {
         yesButton.textContent = 'Yes';
         noButton.textContent = 'No';
 
-        gameAreaCover.style.display = dialog.style.display = 'none';
+        gameAreaCover.style.display = dialogSection.style.display = dialog.style.display = 'none';
         main.style.opacity = 1;
     }
 }

@@ -644,3 +644,11 @@ function startNewGame() {
 
 // Starts the app: called here so all script processing must have been done first
 init();
+
+
+// //  For testing purposes
+// document.querySelectorAll('figure').forEach(figure => {
+//     figure.addEventListener('click', () => {
+//         alert('figure');
+//     })
+// });
