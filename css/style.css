@@ -105,7 +105,6 @@ main {
     flex-direction: column;
     justify-content: space-between;
     height: 525px;
-
 }
 
 .outside div {
@@ -145,7 +144,6 @@ main {
 #gameboard {
     display: flex;
     flex-wrap: wrap;
-    box-sizing: content-box;
     width: 525px;
     height: 525px;
     outline: 3px solid rgb(36, 36, 36, 0.8);
@@ -175,14 +173,6 @@ main {
     font-weight: 600;
     position: relative;
     top: -30px;
-}
-
-.layer {
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    border-radius: inherit;
-    /* background-color: #333; */
 }
 
 #red-house {
