@@ -649,7 +649,17 @@ function startNewGame() {
 
 
 // Starts the app: called here so all script processing must have been done first
-init();
+// init();
+if (window.innerWidth < 720 || window.innerHeight < 600)
+    showDialogBox({
+        title: 'Screen Resolution Requirements',
+        content: `This game is currently not responsive. For proper game view a minimum screen resolution of 720 x 600 is recommended. The current screen resolution is ${window.innerWidth} x ${window.innerHeight}.`,
+        yes: 'Ok',
+        callbackfns: {
+            yes: showGameplayOptions
+        },
+    }, false);
+else showGameplayOptions();
 
 
 // //  For testing purposes

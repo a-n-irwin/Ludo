@@ -385,6 +385,7 @@ dialog-title {
     width: 100%;
     /* To account for how much the size of the close button displaces the title from the center of the dialog */
     padding-left: 25px;
+    color: rgb(173, 79, 95);
 }
 
 dialog div {
