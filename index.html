@@ -7,8 +7,8 @@
     <title>Ludo Champions</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/gameplay-options.css">
-    <script defer src="js/app.js"></script>
-    <script defer src="js/welcome.js"></script>
+    <script defer src="js/main.js"></script>
+    <!-- <script defer src="js/Welcome.js"></script> -->
     <!-- <script defer src="js/tests.js"></script> -->
 </head>
 
@@ -17,10 +17,6 @@
     <main>
         <section id="hud-section">
             <button id="pause-button" type="button" title="Pause the game">|&nbsp;&nbsp;&nbsp;|</button>
-            <div class="dice-outcome-wrapper">
-                <span class="hud-item-title">Dice:&nbsp;</span><span class="dice-outcome">0</span><span
-                    class="dice-outcome">0</span>
-            </div>
             <div>
                 <span class="hud-item-title">Turn: <span id="player-turn" class="hud-item-value">Player 1</span>
             </div>
@@ -68,8 +64,11 @@
                         <!-- Cells will be generated here -->
                     </div>
 
-                    <div class="cell home" red="57" blue="57" green="57" yellow="57">
+                    <div id="home" class="cell" red="57" blue="57" green="57" yellow="57">
                         <img src="img/home.jpeg" alt="home's image" width="79" height="79" draggable="false">
+                        <div class="dice-outcome-wrapper">
+                            <span class="dice-outcome">0</span><span class="dice-outcome">0</span>
+                        </div>
                     </div>
 
                     <div class="horizontal-cell-container" id="right">
@@ -150,14 +149,16 @@
     </section>
 
     <!-- Non-dependent scripts -->
-    <script src="js/javascript-enabled.js"></script>
-    <script src="js/cell.js"></script>
-    <script src="js/dialog.js"></script>
-    <script src="js/markup.js"></script>
+    <script src="js/JavaScriptEnabled.js"></script>
+    <script src="js/Cell.js"></script>
+    <script src="js/Dialog.js"></script>
+    <script src="js/Dice.js"></script>
+    <script src="js/Seed.js"></script>
+    <script src="js/Markup.js"></script>
 
     <!-- Dependent scripts -->
-    <script src="js/hud.js"></script> <!-- Dependent on dialog.js -->
-    <script src="js/options.js"></script> <!-- Dependent on dialog.js, markup.js -->
+    <script src="js/GameplayOptions.js"></script> <!-- Dependent on Dialog.js, Markup.js -->
+    <script src="js/HUD.js"></script> <!-- Dependent on Dialog.js -->
 </body>
 
 </html>

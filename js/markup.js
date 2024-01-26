@@ -23,22 +23,22 @@ const gameplayOptionsHTML = `
                 <legend>Houses</legend>
             </fieldset>
             <label class="houses-label">
-                <input type="checkbox" name="houses" class="house-color" value="red" checked>Red
+                <input type="checkbox" name="houses" class="house-color-checkbox" value="green" checked>Green
             </label>
             <label class="houses-label">
-                <input type="checkbox" name="houses" class="house-color" value="blue" checked>Blue
+                <input type="checkbox" name="houses" class="house-color-checkbox" value="red" checked>Red
             </label>
             <label class="houses-label">
-                <input type="checkbox" name="houses" class="house-color" value="yellow" checked>Yellow
+                <input type="checkbox" name="houses" class="house-color-checkbox" value="blue" checked>Blue
             </label>
             <label class="houses-label">
-                <input type="checkbox" name="houses" class="house-color" value="green" checked>Green
+                <input type="checkbox" name="houses" class="house-color-checkbox" value="yellow" checked>Yellow
             </label>
         </section>
         <br>
         <section class="gameplay-options">
             <label for="board-rotation-select">Board Rotation:</label>
-            <select name="boardRotation" id="board-rotation-select">
+            <select name="boardRotation" id="board-rotation-select" disabled>
                 <option value="0">Default (Green)</option>
                 <option value="90">90 degs (Yellow)</option>
                 <option value="180">180 degs (Blue)</option>

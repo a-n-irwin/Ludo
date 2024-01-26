@@ -20,7 +20,3 @@
 // } else showGameplayOptions();
 
 // showGameplayOptions();
-
-function displayLudoInstructions() {
-
-}

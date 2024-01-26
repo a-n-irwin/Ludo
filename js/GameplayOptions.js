@@ -1,30 +1,17 @@
 // Gameplay configurations
 
+let controlScheme = 'drag-and-drop';
+let numberOfPlayers = 2;
+let numberOfHouses = 4;
+let numberOfCheckedHouses = 4;
+let playerId = { green: 1, blue: 1, red: 2, yellow: 2 };
+let boardRotation = '0';
+
+let checkboxes;
 
 
-// Default gameplay options
-const options = {
-    controlScheme: 'drag-and-drop',
-    players: 2,
-    // The houses playing
-    houses: {
-        count: 4,
-        checked: 4,
-    },
-    // Seed colors and player association
-    playerId: {
-        red: 1,
-        green: 1,
-        blue: 2,
-        yellow: 2
-    },
-    boardRotation: '0'
-}
+const isValidGameplayOptions = () => numberOfCheckedHouses % numberOfPlayers === 0;
 
-
-const isValidGameplayOptions = () => options.houses.checked % options.players === 0;
-
-let houseColorCheckboxes;
 
 /** Creates a menu for players to configure the gameplay*/
 function showGameplayOptions() {
@@ -60,8 +47,8 @@ function showGameplayOptions() {
 
     document.getElementById('players-select').addEventListener('click', autoSetGameplayOptions);
 
-    houseColorCheckboxes = document.querySelectorAll('.house-color');
-    houseColorCheckboxes.forEach(color => {
+    checkboxes = document.querySelectorAll('.house-color-checkbox');
+    checkboxes.forEach(color => {
         color.addEventListener('click', updateCheckedHouses);
     });
 }
@@ -69,65 +56,77 @@ function showGameplayOptions() {
 
 function updateCheckedHouses(event) {
     const checkbox = event.target;
-    options.houses.checked += (checkbox.checked) ? 1 : -1;
+    numberOfCheckedHouses += (checkbox.checked) ? 1 : -1;
+
+    console.log(numberOfCheckedHouses);
 }
 
 
 function autoSetGameplayOptions(event) {
-    options.players = Number(event.target.value)
+    numberOfPlayers = Number(event.target.value);
 
     if (!isValidGameplayOptions()) {
-        houseColorCheckboxes.forEach(checkbox => {
-            if (options.players > options.houses.checked) {
+        checkboxes.forEach(checkbox => {
+            if (numberOfPlayers > numberOfCheckedHouses) {
                 if (!checkbox.checked) {
                     checkbox.checked = true;
-                    options.houses.checked++;
+                    numberOfCheckedHouses++;
                 }
             }
-            else if (options.players < options.houses.checked) {
+            else if (numberOfPlayers < numberOfCheckedHouses) {
                 if (checkbox.checked) {
                     checkbox.checked = false;
-                    options.houses.checked--;
+                    numberOfCheckedHouses--;
                 }
             }
         });
     }
+
     return true;
 }
 
 
 function setDefaultGameplayOptions() {
-    options.controlScheme = 'drag-and-drop';
-    options.players = 2;
-    options.houses.count = 4;
-    options.houses.checked = 4;
-    options.playerId.red = 1;
-    options.playerId.green = 1;
-    options.playerId.blue = 2;
-    options.playerId.yellow = 2;
-    options.boardRotation = '0';
+    controlScheme = 'drag-and-drop';
+    numberOfPlayers = 2;
+    numberOfHouses = 4;
+    numberOfCheckedHouses = 4;
+    playerId.green = 1;
+    playerId.blue = 1;
+    playerId.red = 2;
+    playerId.yellow = 2;
+    boardRotation = '0';
 
     return true;
 }
 
 
 function setControlScheme() {
-    options.controlScheme = document.getElementById('control-scheme-select').value;
+    controlScheme = document.getElementById('control-scheme-select').value;
 }
 
 
 // Assigns seed colors to players by giving them player ids
 function setPlayerIds() {
-    const housesPerPlayer = options.houses.checked / options.players;
+    const housesPerPlayer = numberOfCheckedHouses / numberOfPlayers;
 
-    let count = 0;
-    houseColorCheckboxes.forEach(checkbox => {
-        // Only checked options will be given a player id
-        if (checkbox.checked)
-            options.playerId[checkbox.value] = Math.floor(count++ / housesPerPlayer) + 1;
-        else
-            options.playerId[checkbox.value] = 0;
-    });
+    // If there are two players and 4 houses then manually assign player ids
+    if (housesPerPlayer === 2) {
+        playerId.green = playerId.blue = 1;
+        playerId.red = playerId.yellow = 2;
+    } else {
+        // Find the checked house colors and give them player ids in the order of their occurrence
+        let count = 0;
+
+        checkboxes.forEach(checkbox => {
+            // Only checked options will be given a player id
+            if (checkbox.checked)
+                playerId[checkbox.value] = Math.floor(count++ / housesPerPlayer) + 1;
+            else
+                playerId[checkbox.value] = 0;
+        });
+    }
+    console.log(playerId);
 }
 
 
@@ -136,9 +135,9 @@ function setGameBoardRotation() {
     document.getElementById('gameboard').style.transform = `rotate(${rotation}deg)`;
 
     // To keep the home image's rotation constant
-    document.querySelector('.home img').style.transform = `rotate(${-rotation}deg)`;
+    document.querySelector('#home img').style.transform = `rotate(${-rotation}deg)`;
 
-    options.boardRotation = rotation;
+    boardRotation = rotation;
 }
 
 

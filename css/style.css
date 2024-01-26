@@ -67,6 +67,7 @@ main {
 }
 
 .dice-outcome-wrapper {
+    position: absolute;
     display: flex;
     align-items: center;
 }
@@ -82,10 +83,11 @@ main {
     width: 30px;
     height: 30px;
     background-color: white;
-    border: 1px solid rgb(219, 150, 162);
+    border: 1px solid rgb(177, 124, 124);
     border-radius: 3px;
-    margin-inline: 1px;
-    color: rgb(219, 150, 162);
+    margin-inline: 2px;
+    color: rgb(207, 115, 115);
+    font-weight: 600;
 }
 
 #player-turn {
@@ -250,18 +252,20 @@ main {
 
 
 .cell {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }
 
 .cell-square {
-    position: relative;
     background-color: white;
     border-style: solid;
     border-width: 2px 2px 0 0;
     border-color: #333;
     width: 35px;
     height: 35px;
-    padding: 1.5px 2px 1.5px 1.5px;
 }
 
 
@@ -275,10 +279,7 @@ main {
     background-color: inherit;
 }
 
-.home {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#home {
     background-color: white;
     border: 3px solid #333;
     border-top-width: 5px;
@@ -364,7 +365,7 @@ dialog {
     width: 380px;
     box-shadow: -1px 1px 20px 2px black;
     padding: 0;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
 }
 
 dialog :focus {
