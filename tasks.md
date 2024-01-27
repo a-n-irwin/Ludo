@@ -16,4 +16,4 @@
 
 ### Issues to fix: ###
 1. When a player gets a 6 6 they should, by choice, be able to roll the dice again before making the move.
-2. Dropping on the home cell has issues when the mouse is specifically on the dice
+2. Dropping on the home cell has issues when the mouse is specifically on the dice (It says "You can't go there").
